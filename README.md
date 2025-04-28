@@ -7,6 +7,5 @@
 ## Spécificité
 - Utilisation du port série pour le print (modification de _write() dans syscall.c)
 
-
-## Difficultés:
-Les difficultés que j'ai rencontré durant l'implémentation m'ont pris du temps à débogguer, j'ai donc décidé de tenir un fichier markdown expliquant le processus de debogage et la solution de chaque problème.
+# Difficultés
+Les difficultés que j'ai rencontrées durant l'implémentation m'ont pris du temps à débogguer, j'ai donc décidé de tenir un fichier markdown expliquant le processus de debogage et la solution de chaque problème.
