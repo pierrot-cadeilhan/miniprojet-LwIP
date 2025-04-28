@@ -10,4 +10,5 @@
 
 ## Difficultés:
 L'initialisation MX_LWIP_Init(); mène à une Hard Fault
-It was due to a fonction called ptr_to_mem that was ran with a ptr value greater than MEM_SIZE. Cela est du à l'absence de la déclaration compilateur de MEM_SIZE dans lwipopts.h qui est alors défini par défaut à 1600 dans opts.h
+It was due to a fonction called ptr_to_mem that was ran with a ptr value equal to MEM_SIZE, but had to be lower. Cela est du à l'absence de la déclaration compilateur de MEM_SIZE dans lwipopts.h qui est alors défini par défaut à 1600 dans opts.h.
+Après changement, on a toujourds le même problème ! Quelle ne fut pas ma surprise de constater que ptr avait pris pour valeur 2048, la nouvelle taille de MEM_SIZE !
