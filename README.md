@@ -43,5 +43,18 @@ Enfin, on mettra la valeur 10*1024 à la taille MEM_SIZE du tas de lwIP. Cela co
 
 ### Résoudre le problème d'adressage
 Il y a un problème d'adressage dont la résolution a été décrite dans le fichier difficultes.md
+
+### Configuration de Tera Term
+On commence par la configuration du terminal série.
+Pour ce faire, on choisit la connexion série, puis on règle dans *Configuration*->*Port Série* la configuration choisie pour le périphérique USART1. Ensuite, on chosit LF à l'émission et la réception et on active *echo local* dans *Configuration*->*Terminal*.
+![image](https://github.com/user-attachments/assets/8bf3f0a1-9cc5-4330-8abc-722ef6445806)
+Ensuite, on configure le terminal de la liaison TCP/IP.
+**Une fois le serveur lancé** (sinon le terminal ne se connectera pas) on choisit le mode telnet, puis on rentre l'adresse du serveur et son port, et on valide la sélection.
+![image](https://github.com/user-attachments/assets/bc04b69a-16af-4506-bb38-b76fb9088f70)
+
+
+![image](https://github.com/user-attachments/assets/2994a6ae-7aba-4f02-955d-a976f1a3823b)
+
+
 ## Etape II: Serveur HTTP pour contrôler des LEDs
 ## Etape III: Jeu avec version client et version serveeur
