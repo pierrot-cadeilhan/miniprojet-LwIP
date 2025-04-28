@@ -59,3 +59,6 @@ MEMORY
   FLASH	(rx)		: ORIGIN = 0x8000000,	LENGTH = 1024K
 }
 ```
+
+# On ne peut pas uploader sur GitHub des fichiers de plus de 25MB ou plus de 100 fichiers d'un coup...
+COMMENT UPLOADER LES PROJETS ?? :'(
