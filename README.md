@@ -18,6 +18,11 @@ __attribute__((weak)) int _write(int file, char *ptr, int len)
 ```
 Il faudra bien entendu configurer dans la section *Connectivity* de CubeMX l'USART1 de façon à pouvoir utiliser le port série.
 Dans mon cas, la configuration est la suivante.
+- Baud rate: 115200 Bauds
+- Word length: 8 bits
+- Parity: None
+- Stop bits: 1 bit
+
 ![image](https://github.com/user-attachments/assets/27eefce4-7765-460d-b8ed-3cd8080ae2ff)
 
 ## Etape II: Serveur HTTP pour contrôler des LEDs
