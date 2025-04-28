@@ -6,3 +6,7 @@
 - Un routeur connecté à la carte par ethernet et à un ordianateur
 ## Spécificité
 - Utilisation du port série pour le print (modification de _write() dans syscall.c)
+
+
+## Difficultés:
+L'initialisation MX_LWIP_Init(); mène à une Hard Fault
