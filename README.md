@@ -1,5 +1,8 @@
 # miniprojet-LwIP
 ## Etape I: Serveur TCP pour contrôler des LEDs
+## Etape II: Serveur HTTP pour contrôler des LEDs
+## Etape III: Jeu avec version client et version serveeur
+
 Pour cette étape, il aura fallu
 - Modifier la fonction ``` _write()``` du fichier Core/Src/syscalls.c pour rediriger les ```printf()``` vers le port série 
 - Configurer la librairie lwIP et l'Ethernet
@@ -59,5 +62,6 @@ Ensuite, on configure le terminal de la liaison TCP/IP.
 ### Implémentation du serveur TCP dans une tâche
 On introduit une tâche TCPServer qui se charge de l'écoute sur un port et de l'interprétation des messages TCP reçus. Pour plus de détails, voir le code du projet.
 
-## Etape II: Serveur HTTP pour contrôler des LEDs
-## Etape III: Jeu avec version client et version serveeur
+
+## Etape I bis: Gestion de connexions multiples
+Il faut pour ce faire simplement ajouter une tâche pour la gestion des clients qui sera appelée sur connection d'un nouveau client.
