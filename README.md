@@ -18,29 +18,30 @@ Elle permet d'initialiser le tas du middleware lwIP, qui est implémenté comme 
 
 *Quelle partie pose problème ?*
 
-C'est l'appel de la fonction ptr_to_mem pour définir la fin du tas, de taille MEM_SIZE.
+Il vient de la deuxième instruction de ce bloc.
+```c
+ram_end = ptr_to_mem(MEM_SIZE_ALIGNED);
+ram_end->used = 1;
+ram_end->next = MEM_SIZE_ALIGNED;
+ram_end->prev = MEM_SIZE_ALIGNED;
+MEM_SANITY();
+```
 
-```c ram_end = ptr_to_mem(MEM_SIZE_ALIGNED);```
-
-- Observons en détail ptr_to_mem.
-
-*Que fait cette fonction ?*
-
-Pour manipuler le tas, on utilise des adresses relatives à la racine du tas, qui doivent alors être converties en pointeurs. On a pour ce faire les fonctions ptr_to_mem et mem_to_ptr.
-Le code de la fonction est reporté ci-dessous.
+La fonction ptr_to_mem à pour rôle de transformer une adresse mémoire relative en un pointeur vers un objet mem à cet endroit.
 
 ```c
-static struct mem *ptr_to_mem(mem_size_t ptr)
+ptr_to_mem(mem_size_t ptr)
 {
 	return (struct mem *)(void *)&ram[ptr];
 }
 ```
+ram_end est donc le pointeur vers l'objet mem situé en fin de tas.
 
-*D'où vient le problème ?*
+*Quel est le problème ?*
 
-Le problème est qu'on accède à un endroit de la RAM dont l'accès n'est pas permis.
+Le problème est que l'adresse de ram_end MEM_SIZE_ALIGNED + HEAP_SIZE est hors de la zone de RAM !!
 
-```<error: Cannot access memory at address 0x30040000>```
+```<error: Cannot access memory at address 0x30040640>```
 
 En effet, dans le linker file, on a la définition des mémoires suivantes:
 
@@ -52,4 +53,4 @@ MEMORY
 }
 ```
 
-La RAM s'arrête donc en 0x2004FFFF, ce qui est bien inferieur à LWIP_RAM_HEAP_POINTER qui vaut 0x30040000.
+La RAM s'arrête donc en 0x2004FFFF, ce qui est bien inferieur à LWIP_RAM_HEAP_POINTER qui vaut 0x30040640.
