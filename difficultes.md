@@ -36,7 +36,7 @@ Le problème est que l'adresse de ram_end MEM_SIZE_ALIGNED + HEAP_SIZE est hors 
 
 ```<error: Cannot access memory at address 0x30040640>```
 
-En effet, dans le linker file, on a la définition des mémoires suivantes:
+En effet, dans le linker script, on a la définition des mémoires suivantes:
 
 ```
 MEMORY
@@ -46,4 +46,15 @@ MEMORY
 }
 ```
 
-La RAM s'arrête donc en 0x2004FFFF, ce qui est bien inferieur à LWIP_RAM_HEAP_POINTER qui vaut 0x30040640.Difficultés rencontrées
+La RAM s'arrête donc en 0x2004FFFF, ce qui est bien inferieur à LWIP_RAM_HEAP_POINTER qui vaut 0x30040640.
+
+## Solution mise en oeuvre
+On va construire un espace mémoire dédié dans la RAM en la réduisant un peu. Pour ce faire, on modifie le linker script ainsi:
+```
+MEMORY
+{
+  RAM	(xrw)		: ORIGIN = 0x20000000,	LENGTH = 288K
+  LWIP_RAM	(xrw)	: ORIGIN = 0x20048000,	LENGTH = 32K
+  FLASH	(rx)		: ORIGIN = 0x8000000,	LENGTH = 1024K
+}
+```
