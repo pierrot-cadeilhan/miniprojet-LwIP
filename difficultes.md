@@ -1,4 +1,5 @@
 # L'initialisation MX_LWIP_Init(); mène à une Hard Fault
+/!\ la recompilation du fichier .ioc entraine la remodification LWIP_RAM_HEAP_POINTER dans lwipopts.h /!\
 ## La Hard Fault provient de la fonction mem_init() du fichier mem.c de lwIP
   
 **Tout d'abord, que fait cette fonction ?**
@@ -32,7 +33,7 @@ ram_end est donc le pointeur vers l'objet mem situé en fin de tas.
 
 **Qu'est ce qui cause l'erreur ?**
 
-Le problème est que l'adresse de ram_end MEM_SIZE_ALIGNED + HEAP_SIZE est hors de la zone de RAM !!
+Le problème est que l'adresse de ram_end LWIP_RAM_HEAP_POINTER + MEM_SIZE_ALIGNED est hors de la zone de RAM !!
 
 ```<error: Cannot access memory at address 0x30040640>```
 
