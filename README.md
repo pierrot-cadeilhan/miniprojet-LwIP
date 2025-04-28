@@ -41,5 +41,7 @@ Enfin, on mettra la valeur 10*1024 à la taille MEM_SIZE du tas de lwIP. Cela co
 /!\ Comme vu dans les difficultés, et mentionné plus bas, il y a un problème sur l'adressage du tas. La solution, détaillée dans le fichier markdown, nécessite de changer l'adressage du tas à 0x20048000.
 ![image](https://github.com/user-attachments/assets/7f2f8a70-3674-4540-90c7-1392d10d30fa)
 
+### Résoudre le problème d'adressage
+Il y a un problème d'adressage dont la résolution a été décrite dans le fichier difficultes.md
 ## Etape II: Serveur HTTP pour contrôler des LEDs
 ## Etape III: Jeu avec version client et version serveeur
