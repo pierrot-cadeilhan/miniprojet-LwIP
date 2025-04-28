@@ -1,6 +1,5 @@
 # L'initialisation MX_LWIP_Init(); mène à une Hard Fault
-/!\ Si la recompilation du fichier .ioc entraine la remodification LWIP_RAM_HEAP_POINTER dans lwipopts.h /!\
--> pensez à l'écrire dans la section user code
+/!\ la recompilation du fichier .ioc entraine la remodification LWIP_RAM_HEAP_POINTER dans lwipopts.h /!\
 ## La Hard Fault provient de la fonction mem_init() du fichier mem.c de lwIP
   
 **Tout d'abord, que fait cette fonction ?**
