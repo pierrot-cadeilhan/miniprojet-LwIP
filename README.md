@@ -24,6 +24,22 @@ Dans mon cas, la configuration est la suivante.
 - Stop bits: 1 bit
 
 ![image](https://github.com/user-attachments/assets/27eefce4-7765-460d-b8ed-3cd8080ae2ff)
+### Configuration du périphérique Ethernet
+Il faut tout d'abord sélectionner dans la section *connectivity* de CubeMX le mode d'Ethernet RMII, et activer dans les paramètres le mode interruption sur réception.
+
+![image](https://github.com/user-attachments/assets/9f167a56-9b30-4f60-92c6-8559bfe0cc78)
+
+### Configuration de lwIP
+Il faut ensuite activer dans la section *Middleware and Software* de CubeMX le middleware lwIP, puis sélectionner dans *plateform setting* la plateforme Ethernet.
+
+![image](https://github.com/user-attachments/assets/3c180a3f-fd4c-40bc-ae5a-40806b16ccfd)
+
+Ensuite, on prendra soin d'activer le paramètre LWIP_DHCP dans *General Settings*. Ce paramètre permet l'attribution automatique d'une adresse IP au périphérique Ethernet.
+
+Enfin, on mettra la valeur 10*1024 à la taille MEM_SIZE du tas de lwIP. Cela correspond à une taille de 10KBytes. 
+
+/!\ Comme vu dans les difficultés, et mentionné plus bas, il y a un problème sur l'adressage du tas. La solution, détaillée dans le fichier markdown, nécessite de changer l'adressage du tas à 0x20048000.
+![image](https://github.com/user-attachments/assets/7f2f8a70-3674-4540-90c7-1392d10d30fa)
 
 ## Etape II: Serveur HTTP pour contrôler des LEDs
 ## Etape III: Jeu avec version client et version serveeur
