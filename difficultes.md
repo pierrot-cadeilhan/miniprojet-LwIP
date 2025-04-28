@@ -1,5 +1,5 @@
 # L'initialisation MX_LWIP_Init(); mène à une Hard Fault
-/!\ la recompilation du fichier .ioc entraine la remodification LWIP_RAM_HEAP_POINTER dans lwipopts.h /!\
+/!\ Si la recompilation du fichier .ioc entraine la remodification LWIP_RAM_HEAP_POINTER dans lwipopts.h, pensez à changer la racine du tas dans CubeMX /!\
 ## La Hard Fault provient de la fonction mem_init() du fichier mem.c de lwIP
   
 **Tout d'abord, que fait cette fonction ?**
