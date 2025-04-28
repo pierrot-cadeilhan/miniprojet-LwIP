@@ -9,6 +9,43 @@
 
 
 ## Difficultés:
-- L'initialisation MX_LWIP_Init(); mène à une Hard Fault
-- It was due to a fonction called ptr_to_mem that was ran with a ptr value equal to MEM_SIZE, but had to be lower. Cela est du à l'absence de la déclaration compilateur de MEM_SIZE dans lwipopts.h qui est alors défini par défaut à 1600 dans opts.h.
-- Après modification, on a toujours le même problème ! Quelle ne fut pas ma surprise de constater que ptr avait pris pour valeur 2048, la nouvelle taille de MEM_SIZE !
+### L'initialisation MX_LWIP_Init(); mène à une Hard Fault
+- La Hard Fault provient de la fonction mem_init() du fichier mem.c de lwIP.
+  
+*Tout d'abord, que fait cette fonction ?*
+
+Elle permet d'initialiser le tas du middleware lwIP, qui est implémenté comme une liste chaînée d'objets mem.
+
+*Quelle partie pose problème ?*
+
+C'est l'appel de la fonction ptr_to_mem pour définir la fin du tas, de taille MEM_SIZE.
+```c ram_end = ptr_to_mem(MEM_SIZE_ALIGNED);```
+
+- Observons en détail ptr_to_mem.
+
+*Que fait cette fonction ?*
+
+Pour manipuler le tas, on utilise des adresses relatives à la racine du tas, qui doivent alors être converties en pointeurs. On a pour ce faire les fonctions ptr_to_mem et mem_to_ptr.
+Le code de la fonction est reporté ci-dessous.
+```c
+static struct mem *ptr_to_mem(mem_size_t ptr)
+{
+	return (struct mem *)(void *)&ram[ptr];
+}
+```
+
+*D'où vient le problème ?*
+
+Le problème est qu'on accède à un endroit de la RAM dont l'accès n'est pas permis.
+
+```<error: Cannot access memory at address 0x30040000>```
+
+En effet, dans le linker file, on a la définition des mémoires suivantes:
+```
+MEMORY
+{
+  RAM    (xrw)    : ORIGIN = 0x20000000,   LENGTH = 320K
+  FLASH    (rx)    : ORIGIN = 0x8000000,   LENGTH = 1024K
+}
+```
+La RAM s'arrête donc en 0x2004FFFF, ce qui est bien inferieur à LWIP_RAM_HEAP_POINTER qui vaut 0x30040000.
