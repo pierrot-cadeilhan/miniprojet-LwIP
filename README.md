@@ -10,7 +10,7 @@
 
 ## Difficultés:
 ### L'initialisation MX_LWIP_Init(); mène à une Hard Fault
-- La Hard Fault provient de la fonction mem_init() du fichier mem.c de lwIP.
+#### La Hard Fault provient de la fonction mem_init() du fichier mem.c de lwIP
   
 *Tout d'abord, que fait cette fonction ?*
 
@@ -26,6 +26,9 @@ ram_end->next = MEM_SIZE_ALIGNED;
 ram_end->prev = MEM_SIZE_ALIGNED;
 MEM_SANITY();
 ```
+#### Voyons en détail la source de l'erreur
+
+*Que sont les variables considérées ?*
 
 La fonction ptr_to_mem à pour rôle de transformer une adresse mémoire relative en un pointeur vers un objet mem à cet endroit.
 
@@ -35,9 +38,10 @@ ptr_to_mem(mem_size_t ptr)
 	return (struct mem *)(void *)&ram[ptr];
 }
 ```
+
 ram_end est donc le pointeur vers l'objet mem situé en fin de tas.
 
-*Quel est le problème ?*
+*Qu'est ce qui cause l'erreur ?*
 
 Le problème est que l'adresse de ram_end MEM_SIZE_ALIGNED + HEAP_SIZE est hors de la zone de RAM !!
 
