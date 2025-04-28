@@ -65,3 +65,4 @@ On introduit une tâche TCPServer qui se charge de l'écoute sur un port et de l
 
 ## Etape I bis: Gestion de connexions multiples
 Il faut pour ce faire simplement ajouter une tâche pour la gestion des clients qui sera appelée sur connection d'un nouveau client.
+Il est intéressant d'observer le traitement des clients dans le cas précédents: les messages d'un client en attente seront empilés et dépilés lorsque le client en cours de traitement se déconnectera.
