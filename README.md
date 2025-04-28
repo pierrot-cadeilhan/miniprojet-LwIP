@@ -19,6 +19,7 @@ Elle permet d'initialiser le tas du middleware lwIP, qui est implémenté comme 
 *Quelle partie pose problème ?*
 
 C'est l'appel de la fonction ptr_to_mem pour définir la fin du tas, de taille MEM_SIZE.
+
 ```c ram_end = ptr_to_mem(MEM_SIZE_ALIGNED);```
 
 - Observons en détail ptr_to_mem.
@@ -27,6 +28,7 @@ C'est l'appel de la fonction ptr_to_mem pour définir la fin du tas, de taille M
 
 Pour manipuler le tas, on utilise des adresses relatives à la racine du tas, qui doivent alors être converties en pointeurs. On a pour ce faire les fonctions ptr_to_mem et mem_to_ptr.
 Le code de la fonction est reporté ci-dessous.
+
 ```c
 static struct mem *ptr_to_mem(mem_size_t ptr)
 {
@@ -41,6 +43,7 @@ Le problème est qu'on accède à un endroit de la RAM dont l'accès n'est pas p
 ```<error: Cannot access memory at address 0x30040000>```
 
 En effet, dans le linker file, on a la définition des mémoires suivantes:
+
 ```
 MEMORY
 {
@@ -48,4 +51,5 @@ MEMORY
   FLASH    (rx)    : ORIGIN = 0x8000000,   LENGTH = 1024K
 }
 ```
+
 La RAM s'arrête donc en 0x2004FFFF, ce qui est bien inferieur à LWIP_RAM_HEAP_POINTER qui vaut 0x30040000.
